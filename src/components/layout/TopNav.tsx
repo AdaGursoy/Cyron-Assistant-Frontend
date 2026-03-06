@@ -1,7 +1,11 @@
 import { useAuth } from '../../hooks/useAuth';
 import { Button } from '../ui/Button';
 
-export const TopNav = () => {
+interface TopNavProps {
+  currentGuildName?: string | null;
+}
+
+export const TopNav = ({ currentGuildName }: TopNavProps) => {
   const { user, logout } = useAuth();
 
   const initials = user?.username
@@ -13,14 +17,37 @@ export const TopNav = () => {
         .toUpperCase()
     : 'U';
 
+  const guildLabel =
+    currentGuildName && currentGuildName.trim().length > 0
+      ? currentGuildName
+      : 'Select a server to manage';
+
   return (
-    <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/80 px-6 py-3 backdrop-blur-lg">
-      <div className="mx-auto flex max-w-6xl items-center justify-between">
-        <div>
-          <h1 className="text-base font-semibold">Dashboard</h1>
-          <p className="text-xs text-text-muted">
-            Manage your Cyron Assistant guilds and usage.
-          </p>
+    <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/80 px-4 py-3 backdrop-blur-lg">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <div className="hidden items-center gap-2 sm:flex">
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary text-sm font-semibold text-white shadow-sm">
+              CA
+            </div>
+            <div className="leading-tight">
+              <h1 className="text-sm font-semibold tracking-tight">
+                Cyron Assistant
+              </h1>
+              <p className="text-[11px] text-text-muted">
+                Multi-tenant AI ticket bot dashboard
+              </p>
+            </div>
+          </div>
+          <div className="h-8 border-l border-slate-200 sm:block" />
+          <div className="flex flex-col">
+            <span className="text-xs font-semibold text-text-primary">
+              {guildLabel}
+            </span>
+            <span className="text-[11px] text-text-muted">
+              Manage knowledge, usage and ticket settings.
+            </span>
+          </div>
         </div>
 
         <div className="flex items-center gap-3">
@@ -41,7 +68,11 @@ export const TopNav = () => {
               <span className="text-text-muted">Logged in with Discord</span>
             </div>
           </div>
-          <Button variant="ghost" onClick={logout} className="text-xs font-medium">
+          <Button
+            variant="ghost"
+            onClick={logout}
+            className="text-xs font-medium"
+          >
             Logout
           </Button>
         </div>

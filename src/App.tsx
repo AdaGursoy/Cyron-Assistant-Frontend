@@ -28,6 +28,7 @@ export default function App() {
             }
           >
             <Route path="/" element={<Dashboard />} />
+            <Route path="/guilds/:guildId" element={<Dashboard />} />
             <Route path="/guilds/:guildId/knowledge" element={<Knowledge />} />
             <Route path="/guilds/:guildId/usage" element={<Usage />} />
             <Route path="/guilds/:guildId/settings" element={<GuildSettings />} />
